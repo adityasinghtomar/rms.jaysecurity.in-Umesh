@@ -18,14 +18,22 @@
 <div class="row">
     <div class="form-group col-md-6">
         <?php echo Form::label('aadhar_card_no', __('Aadhar Card No'),['class'=>'form-control-label']); ?><span class="text-danger pl-1">*</span>
-        <?php echo Form::text('aadhar_card_no', old('aadhar_card_no'), ['class' => 'form-control','required' => 'required']); ?>
-
+        <!--<?php echo Form::text('aadhar_card_no', old('aadhar_card_no'), ['class' => 'form-control','required' => 'required']); ?>-->
+         <input id="aadhar_card_no" type="number" class="form-control" name="aadhar_card_no" placeholder="Aadhar Number" onkeyup='check1();'/>
     </div>
     <div class="form-group col-md-6">
         <?php echo Form::label('name', __('Name'),['class'=>'form-control-label']); ?><span class="text-danger pl-1">*</span>
-        <?php echo Form::text('name', old('name'), ['class' => 'form-control','required' => 'required']); ?>
-
+        <!--<?php echo Form::text('name', old('name'), ['class' => 'form-control','required' => 'required']); ?>-->
+        <input id="name" type="text" class="form-control" name="name" placeholder="Enter Name"  onkeypress="return (event.charCode > 64 && 
+event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/> 
     </div>
+    <div class="form-group col-md-6">
+    <span id='message1'></span>
+    </div>
+    <div class="form-group col-md-6">
+    <span id='message2'></span>
+    </div>
+    
     <!--<div class="form-group col-md-6">-->
     <!--    <?php echo Form::label('phone', __('Phone'),['class'=>'form-control-label']); ?><span class="text-danger pl-1">*</span>-->
     <!--    <?php echo Form::text('phone',old('phone'), ['class' => 'form-control']); ?>-->
@@ -40,7 +48,7 @@
 
     <div class="col-md-6">
         <div class="form-group ">
-            <?php echo Form::label('gender', __('Gender'),['class'=>'form-control-label']); ?><span class="text-danger pl-1">*</span>
+            <?php echo Form::label('gender', __('Gender'),['class'=>'form-control-label']); ?><span class="text-danger pl-1"></span>
             <div class="d-flex radio-check">
                 <div class="custom-control custom-radio custom-control-inline">
                     <input type="radio" id="g_male" value="Male" name="gender" class="custom-control-input">
@@ -58,12 +66,12 @@
         </div>
     </div>
     <div class="form-group col-md-6">
-        <?php echo Form::label('email', __('Email'),['class'=>'form-control-label']); ?><span class="text-danger pl-1">*</span>
+        <?php echo Form::label('email', __('Email'),['class'=>'form-control-label']); ?><span class="text-danger pl-1"></span>
         <?php echo Form::email('email',old('email'), ['class' => 'form-control']); ?>
 
     </div>
     <div class="form-group col-md-6">
-        <?php echo Form::label('password', __('Password'),['class'=>'form-control-label']); ?><span class="text-danger pl-1">*</span>
+        <?php echo Form::label('password', __('Password'),['class'=>'form-control-label']); ?><span class="text-danger pl-1"></span>
         <?php echo Form::password('password', ['class' => 'form-control']); ?>
 
     </div>
@@ -74,12 +82,12 @@
     <!--</div>-->
     
     <div class="form-group col-md-6">
-        <?php echo Form::label('uan_number', __('UAN Number'),['class'=>'form-control-label']); ?><span class="text-danger pl-1">*</span>
+        <?php echo Form::label('uan_number', __('UAN Number'),['class'=>'form-control-label']); ?><span class="text-danger pl-1"></span>
         <?php echo Form::text('uan_number', old('uan_number'), ['class' => 'form-control']); ?>
 
     </div>
     <div class="form-group col-md-6">
-        <?php echo Form::label('pf_number', __('PF Number'),['class'=>'form-control-label']); ?><span class="text-danger pl-1">*</span>
+        <?php echo Form::label('pf_number', __('PF Number'),['class'=>'form-control-label']); ?><span class="text-danger pl-1"></span>
         <?php echo Form::text('pf_number',old('pf_number'), ['class' => 'form-control']); ?>
 
     </div>    
@@ -96,13 +104,12 @@
     <div class="form-group col-md-12">
         <?php echo Form::label('employee_id', __('Employee ID'),['class'=>'form-control-label']); ?>
 
-        <?php echo Form::text('employee_id', $employeesId, ['class' => 'form-control']); ?>
+        <?php echo Form::text('employee_id', $employeesId, ['class' => 'form-control', 'readonly'=>'readonly']); ?>
 
     </div>
                  <div class="form-group col-md-6">
-                     <?php echo Form::label('branch_id', __('Location'),['class'=>'form-control-label']); ?>
-
-                        <select  id="branch" class="form-control" name="branch_id">
+                     <?php echo Form::label('branch_id', __('Location'),['class'=>'form-control-label']); ?><span class="text-danger pl-1">*</span>
+                        <select  id="branch" class="form-control" name="branch_id" required>
                             <option value="">Select Branch</option>
                             <?php $__currentLoopData = $branches; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <option value=" <?php echo e($data->id); ?> ">
@@ -114,9 +121,8 @@
                     </div>
                     
                      <div class="form-group col-md-6">
-                      <?php echo Form::label('company_client_id', __('Company'),['class'=>'form-control-label']); ?>
-
-                        <select id="company" class="form-control" name="company_client_id">
+                      <?php echo Form::label('company_client_id', __('Company'),['class'=>'form-control-label']); ?><span class="text-danger pl-1">*</span>
+                        <select id="company" class="form-control" name="company_client_id" required>
                     
                         </select>
                     </div>
@@ -147,9 +153,8 @@
     <!--</div>-->
     
     <div class="form-group col-md-6">
-        <?php echo e(Form::label('employee_role', __('Role'),['class'=>'form-control-label'])); ?>
-
-        <?php echo e(Form::select('employee_role', $roles,null, array('class' => 'form-control  select2','id'=>'employee_role' ))); ?>
+        <?php echo e(Form::label('employee_role', __('Role'),['class'=>'form-control-label'])); ?><span class="text-danger pl-1">*</span>
+        <?php echo e(Form::select('employee_role', $roles,null, array('class' => 'form-control  select2','id'=>'employee_role','required' => 'required' ))); ?>
 
     </div>
     
@@ -206,23 +211,23 @@ unset($__errorArgs, $__bag); ?> border-0" <?php if($document->is_required == 1):
 <div class="card-body employee-detail-create-body">
 <div class="row">
     <div class="form-group col-md-6">
-        <?php echo Form::label('account_holder_name', __('Account Holder Name'),['class'=>'form-control-label']); ?><span class="text-danger pl-1">*</span>
+        <?php echo Form::label('account_holder_name', __('Account Holder Name'),['class'=>'form-control-label']); ?><span class="text-danger pl-1"></span>
         <?php echo Form::text('account_holder_name', old('account_holder_name'), ['class' => 'form-control']); ?>
 
 
     </div>
     <div class="form-group col-md-6">
-        <?php echo Form::label('bank_name', __('Bank Name'),['class'=>'form-control-label']); ?><span class="text-danger pl-1">*</span>
+        <?php echo Form::label('bank_name', __('Bank Name'),['class'=>'form-control-label']); ?><span class="text-danger pl-1"></span>
         <?php echo Form::text('bank_name', old('bank_name'), ['class' => 'form-control']); ?>
 
     </div>
     <div class="form-group col-md-6">
-        <?php echo Form::label('account_number', __('Account Number'),['class'=>'form-control-label']); ?><span class="text-danger pl-1">*</span>
+        <?php echo Form::label('account_number', __('Account Number'),['class'=>'form-control-label']); ?><span class="text-danger pl-1"></span>
         <!--<?php echo Form::number('account_number', old('account_number'), ['class' => 'form-control']); ?>-->
         <input id="account_number" type="number" class="form-control" name="account_number" placeholder="Enter Account Number" onkeyup='check();'/>
     </div>
     <div class="form-group col-md-6">
-        <?php echo Form::label('confirm_account_number', __('Confirm Account Number'),['class'=>'form-control-label']); ?><span class="text-danger pl-1">*</span>
+        <?php echo Form::label('confirm_account_number', __('Confirm Account Number'),['class'=>'form-control-label']); ?><span class="text-danger pl-1"></span>
         <!--<?php echo Form::number('confirm_account_number', old('confirm_account_number'), ['class' => 'form-control']); ?>-->
         <input id="confirm_account_number" type="number" class="form-control" name="confirm_account_number" placeholder="Confirm Account Number" onkeyup='check();'/>
     </div>
@@ -230,7 +235,7 @@ unset($__errorArgs, $__bag); ?> border-0" <?php if($document->is_required == 1):
     <span id='message'></span>
     </div>
     <div class="form-group col-md-6">
-        <?php echo Form::label('bank_ifsc_code', __('Bank IFSC Code'),['class'=>'form-control-label']); ?><span class="text-danger pl-1">*</span>
+        <?php echo Form::label('bank_ifsc_code', __('Bank IFSC Code'),['class'=>'form-control-label']); ?><span class="text-danger pl-1"></span>
         <?php echo Form::text('bank_ifsc_code',old('bank_ifsc_code'), ['class' => 'form-control']); ?>
 
     </div>
@@ -241,9 +246,9 @@ unset($__errorArgs, $__bag); ?> border-0" <?php if($document->is_required == 1):
 
     </div>
     <div class="form-group col-md-12">
-        <?php echo Form::label('pan_number', __('PAN Number'),['class'=>'form-control-label']); ?><span class="text-danger pl-1">*</span>
-        <?php echo Form::text('pan_number',old('pan_number'), ['class' => 'form-control']); ?>
-
+        <?php echo Form::label('pan_number', __('PAN Number'),['class'=>'form-control-label']); ?><span class="text-danger pl-1"></span>
+        <!--<?php echo Form::text('pan_number',old('pan_number'), ['class' => 'form-control']); ?>-->
+        <input id="pan_number" type="text" class="form-control" name="pan_number" placeholder="PAN Number" onkeyup='check3();'/>
     </div>
     
 </div>
@@ -266,13 +271,13 @@ unset($__errorArgs, $__bag); ?> border-0" <?php if($document->is_required == 1):
             ?>
              <div class="choose-file form-group">
 
-                <label for="document" class="form-control-label">
-                    <div>Choose file here</div>
-                     <input type="<?php echo $value->type; ?>" name="fields[value][]" class="form-control">
+                <label for="document" class="form-control">
+                    <!--<div>Choose file here</div>-->
+                     <input type="<?php echo $value->type; ?>" name="fields[value][]" class="form-control" style="opacity:unset;">
                 </label>
                 <p class="document_create"></p>
             </div>
-          <input type="<?php echo $value->type; ?>" name="fields[value][]" class="form-control"><?php
+          <?php
         }
         else if ($value->type=='radio') {
             ?><div class="row"><?php
@@ -460,7 +465,37 @@ $.each(data, function (key, value) {
   }
 }
     </script>
- 
+    <script type="text/javascript">
+    function check1() {
+        var aadhar = document.getElementById("aadhar_card_no").value;
+        var adharcardTwelveDigit = /^\d{12}$/;
+        // var adharSixteenDigit = /^\d{16}$/;
+        if (aadhar != '') {
+            if (aadhar.match(adharcardTwelveDigit)) {
+                 document.getElementById('message1').style.color = 'green';
+                 document.getElementById('message1').innerHTML = '';
+            }
+            else {
+                document.getElementById('message1').style.color = 'red';
+    document.getElementById('message1').innerHTML = 'Please Enter Valid Aadhar Number';
+            }
+        }
+    }
+</script>
+      <script>
+   var check12 = function() {
+  var aad = document.getElementById('aadhar_card_no').value ;
+  var adharcard = /^\d{12}$/;
+   if (aad == adharcard ) {
+    document.getElementById('message1').style.color = 'green';
+    document.getElementById('message1').innerHTML = 'Matching Account Number';
+  } else {
+    document.getElementById('message1').style.color = 'red';
+    document.getElementById('message1').innerHTML = 'Not Matching Account Number';
+  }
+}
+
+  
 <?php $__env->stopPush(); ?>
 
 <?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /home3/jaysecurity/rms.jaysecurity.in/resources/views/employee/create.blade.php ENDPATH**/ ?>

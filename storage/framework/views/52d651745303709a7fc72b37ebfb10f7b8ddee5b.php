@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('page-title'); ?>
     <?php echo e(__('Employee')); ?>
 
@@ -254,7 +256,9 @@
         $c=0;
         if ($value->type=='file') {
              
-            ?><img src="https://progressiveaidata.in/rms/public/uploads/<?php echo e($field_value); ?>" width="100px" height="100px">
+            ?><a href="<?php echo e(url('public/uploads/')); ?>/<?php echo e($field_value); ?>"><i class="fa-solid fa-download" style="width:10px; height:10px;"></i></a>
+            <img src="<?php echo e(url('public/uploads/')); ?>/<?php echo e($field_value); ?>" width="100px" height="100px">
+            
                             <?php 
             $c++;
         }

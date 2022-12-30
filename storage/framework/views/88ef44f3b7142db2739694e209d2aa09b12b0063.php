@@ -82,16 +82,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-2 col-lg-3">
-                                <div class="all-select-box">
-                                    <div class="btn-box">
-                                        <?php echo e(Form::label('department', __('Department'),['class'=>'text-type'])); ?>
-
-                                        <?php echo e(Form::select('department', $department,isset($_GET['department'])?$_GET['department']:'', array('class' => 'form-control select2'))); ?>
-
-                                    </div>
-                                </div>
-                            </div>
                         <?php endif; ?>
                         <div class="col-auto mt-auto mb-3">
                             <a href="#" class="apply-btn" onclick="document.getElementById('attendanceemployee_filter').submit(); return false;">

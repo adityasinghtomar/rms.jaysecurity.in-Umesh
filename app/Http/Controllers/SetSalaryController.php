@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+namespace App\Exports;
 use App\Models\Allowance;
 use App\Models\AllowanceOption;
 use App\Models\Commission;
@@ -21,6 +21,8 @@ use App\Models\EmployeeSalaryLog;
 use App\Models\Client_company;
 use App\Models\Client_company_unit;
 
+use Maatwebsite\Excel\Concerns\FromCollection;
+
 class SetSalaryController extends Controller
 {
     public function index()
@@ -29,8 +31,8 @@ class SetSalaryController extends Controller
             $branch = Branch::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
             $company = Client_company::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
             $company_unit = Client_company_unit::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
-            // $employees = Employee::where(['created_by' => \Auth::user()->creatorId(),])->get();
-            $employees = Employee::select('employees.*','client_company.name as client_name','client_company_unit.name as client_unit','branches.name as branch')->join('client_company','client_company.id','=','employees.company_client_id')->join('client_company_unit','client_company_unit.id','=','employees.company_client_unit_id')->join('branches','branches.id','=','employees.branch_id')->get();
+         $employees = Employee::where(['created_by' => \Auth::user()->creatorId(),])->get();
+            // $employees = Employee::select('employees.*','client_company.name as client_name','client_company_unit.name as client_unit','branches.name as branch')->join('client_company','client_company.id','=','employees.company_client_id')->join('client_company_unit','client_company_unit.id','=','employees.company_client_unit_id')->join('branches','branches.id','=','employees.branch_id')->get();
             return view('setsalary.index', compact('employees','branch','company','company_unit'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
@@ -246,5 +248,13 @@ class SetSalaryController extends Controller
         // dd($salary);
 
         return view('setsalary.basic_salary', compact('employee', 'payslip_type', 'salary'));
+    }
+     public function export()
+    {
+        $name = 'Salary_' . date('Y-m-d i:h:s');
+        $data = Excel::download(new SetsalaryExport(), $name . '.csv');
+        // ob_end_clean();
+
+        return $data;
     }
 }

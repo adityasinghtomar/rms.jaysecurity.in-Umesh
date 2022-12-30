@@ -1,9 +1,9 @@
 <div class="card bg-none card-box">
-    <?php echo e(Form::model($user, array('route' => array('user.update', $user->id), 'method' => 'PUT'))); ?>
+    <?php echo e(Form::model($user, array('route' => array('user.update', $user->id), 'method' => 'PUT' ,'enctype' => 'multipart/form-data'  ))); ?>
 
     <div class="row">
         <div class="form-group col-lg-6 col-md-6">
-            <?php echo Form::label('name', __('Name'),['class'=>'form-control-label']); ?>
+            <?php echo Form::label('name', __('Name1'),['class'=>'form-control-label']); ?>
 
             <?php echo Form::text('name', null, ['class' => 'form-control','required' => 'required']); ?>
 
@@ -14,7 +14,13 @@
             <?php echo Form::text('email', null, ['class' => 'form-control','required' => 'required']); ?>
 
         </div>
+        <div class="form-group col-lg-6 col-md-6">
+            <?php echo Form::label('password', __('Password'), ['class' => 'form-control-label']); ?>
 
+            <?php echo Form::password('password', ['class' => 'form-control', 'required' => 'required']); ?>
+
+        </div>
+        
         <?php if(\Auth::user()->type != 'super admin'): ?>
             <div class="form-group  col-lg-6 col-md-6">
                 <?php echo e(Form::label('role', __('User Role'),['class'=>'form-control-label'])); ?>
@@ -53,26 +59,41 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
         </div>
-        <?php if(Auth::user()->type == "company"): ?>
-                    <div class="form-group col-lg-6 col-md-6">
-                        <label for="" class="form-control-label">Status</label>
-                       <select name="status" id="status" class="form-control form-control-sm">
-                            <option value="">Select Status</option>
-                            <option value="Pending" <?php if($user->status == 'Pending'): ?> selected <?php endif; ?> >Pending</option>
-                            <option value="Active" <?php if($user->status == 'Active'): ?> selected <?php endif; ?>>Active</option>
-                            <option value="Reject" <?php if($user->status == 'Reject'): ?> selected <?php endif; ?>>Reject</option>
-                       </select>
-                    </div>
-                    <div class="form-group col-lg-6 col-md-6" id="note">
-                        <label for=""  class="form-control-label">Note</label>
-                        <textarea name="note"  id="" cols="5" rows="2" class="form-control"><?php echo e($user->note); ?></textarea>
-                    </div>
-                    <?php endif; ?>
+        <!--<?php if(Auth::user()->type == "company"): ?>-->
+        <!--            <div class="form-group col-lg-12 col-md-12">-->
+        <!--                <label for="" class="form-control-label">Status</label>-->
+        <!--               <select name="status" id="status" class="form-control form-control-sm">-->
+        <!--                    <option value="">Select Status</option>-->
+        <!--                    <option value="Pending" <?php if($user->status == 'Pending'): ?> selected <?php endif; ?> >Pending</option>-->
+        <!--                    <option value="Active" <?php if($user->status == 'Active'): ?> selected <?php endif; ?>>Active</option>-->
+        <!--                    <option value="Reject" <?php if($user->status == 'Reject'): ?> selected <?php endif; ?>>Reject</option>-->
+        <!--               </select>-->
+        <!--            </div>-->
+        <!--            <div class="form-group col-lg-6 col-md-6" id="note">-->
+        <!--                <label for=""  class="form-control-label">Note</label>-->
+        <!--                <textarea name="note"  id="" cols="5" rows="2" class="form-control"><?php echo e($user->note); ?></textarea>-->
+        <!--            </div>-->
+        <!--            <?php endif; ?>-->
+          <div class="form-group col-lg-6 col-md-6">
+            <?php echo e(Form::label('avatar', __('Avatar'), ['class' => 'form-control-label'])); ?>
+
+            <div class="choose-file form-group">
+                <label for="document" class="form-control-label">
+                    <div>Choose file here</div>
+                    <input type="file" name="avatar" class="form-control">
+                </label>
+            </div>
+
+        </div>
+
+        </div>
+
         <div class="col-md-12">
             <input type="submit" value="<?php echo e(__('Update')); ?>" class="btn-create badge-blue">
             <input type="button" value="<?php echo e(__('Cancel')); ?>" class="btn-create bg-gray" data-dismiss="modal">
         </div>
     </div>
+    
     <script>
         $(document).ready(function () {
             $('.user_role').on('change', function() {

@@ -115,11 +115,11 @@
 <div class="container-main" style=" margin-bottom: 26px; margin-top: 15px;height:215px;width: 736px;margin-left: 64px;"> 
      <div class="container" style="border: 2px solid black;font-size: 10px;height:229.98px; width:366px;margin-left:42px">
                <a href="#" onclick="window.print();" target="_blank"></a>
-           <h3 style="font-family: 'Inter', sans-serif;  margin-top: 12px;font-size: 17px;color: red; text-align: center;"> <img src="https://progressiveaidata.in/rms/storage/uploads/logo/logo1.png" width="30px" height="25px">  <b>JAY SECURITY SERVICES</b></h3>
+           <h3 style="font-family: 'Inter', sans-serif;  margin-top: 12px;font-size: 17px;color: red; text-align: center;"> <img src="{{url('public/uploads/logo/logo1.png')}}" width="30px" height="25px">  <b>JAY SECURITY SERVICES</b></h3>
               <b> <p style="font-family: 'Noto Sans TC', sans-serif;   font-size: 13px;  margin-left: 16px;margin-top: -7px;">
                 OFFICE :- 1ST Floor Above deep Super Store,Sai Kripa -02 Nani Daman – 396210 (U.T)</p></b>  
               <b><p style="margin-left: 60px;margin-top: -10px;font-size: 12px; font-family: 'Noto Sans TC', sans-serif;">Mobile No :- 8155933331/8155933337</p></b> 
-          <img style="width: 76px; margin: -12px 0;" src="https://progressiveaidata.in/rms/public/uploads/{{$photo}}" />
+          <img style="width: 76px; margin: -12px 0;" src="{{url('public/uploads/')}}/{{$photo}}" />
           <ul style="margin-left: 54px;font-size: 11px;margin-top: -13%;"></br>
               <li style="list-style: none; font-weight: 50 font-family: 'Noto Sans TC', sans-serif;">
               <b> Name Of Emp : {{ $employee->name }}</b>

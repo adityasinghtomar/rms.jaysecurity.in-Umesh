@@ -105,7 +105,7 @@ class EmployeeController extends Controller
                     // 'name' => 'required',
                     // 'dob' => 'required',
                     // 'gender' => 'required',
-                    'aadhar_card_no' => 'required|unique:employees|numeric',
+                    'aadhar_card_no' => 'required|unique:employees|numeric|digits:12',
                     
                     // 'document.*' => 'mimes:jpeg,png,jpg,gif,svg,pdf,doc,zip|max:20480',
                     // 'company_client_id'    => 'required',
@@ -136,7 +136,7 @@ class EmployeeController extends Controller
 
                 $validate_1 = \Validator::make($validate_1, [
                     // 'field_id'    => 'required|numeric',
-                //   'field_name'  => 'required',
+                    // 'field_name'  => 'required',
                     // 'field_type'  => 'required',
                     // 'field_mandatory' => 'required|numeric',
                 ]);
@@ -148,40 +148,22 @@ class EmployeeController extends Controller
                 }
 
                 if ($request->fields['mandatory'][$i] == '1') {
-
-                    if ($request->fields['type'][$i] == 'number') {
-                        $validate_2 = array(
-                            'field_value'  => $request->fields['value_' . $request->fields['id'][$i]],
-                        );
-                        // $validate_ = \Validator::make($validate_2, [
-                        //     'field_value'  => 'required|numeric',
-                        // ]);
-                         $c_++;
-                    }
-                    if ($request->fields['type'][$i] == 'date') {
-                        $validate_2 = array(
-                            'field_value'  => $request->fields['value_' . $request->fields['id'][$i]],
-                        );
-                        // $validate_ = \Validator::make($validate_2, [
-                        //     'field_value'  => 'required|date',
-                        // ]);
-                         $c_++;
-                    }
-                    if ($request->fields['type'][$i] == 'file') {
+                    if($request->fields['type'][$i] == 'file') {
                         if (isset($request->file("fields")['value'][$c])) {
                             $fils = $request->file("fields")['value'][$c];
-                            if (!$fils) {
-                                // echo "string";die;
-                                $str_error = $request->fields['name'][$i] . 'field is required';
-                                return redirect()->back()->withInput()->with('error', $str_error);
-                            } else {
-                                $validate_2 = array(
-                                    'field_value'  => $request->fields['value'][$c],
-                                );
-                                $validate_ = \Validator::make($validate_2, [
-                                    'field_value'  => 'required|mimes:pdf,png,jpg,jpeg',
-                                ]);
-                            }
+                        //  print_r($fils);die;
+                            // if (!$fils) {
+                            //     // echo "string";die;
+                            //     $str_error = $request->fields['name'][$i] . 'field is required';
+                            //     return redirect()->back()->withInput()->with('error', $str_error);
+                            // } else {
+                            //     $validate_2 = array(
+                            //         'field_value'  => $request->fields['value'][$c],
+                            //     );
+                            //     $validate_ = \Validator::make($validate_2, [
+                            //         // 'field_value'  => 'required|mimes:pdf,png,jpg,jpeg',
+                            //     ]);
+                            // }
                             $c++;
                         }
                     } else {
@@ -189,10 +171,30 @@ class EmployeeController extends Controller
                             'field_value'  => $request->fields['value_' . $request->fields['id'][$i]],
                         );
                         $validate_ = \Validator::make($validate_2, [
-                            'field_value'  => 'required',
+                            // 'field_value'  => 'required',
                         ]);
-                         $c_++;
+                    //  $c_++;
                     }
+
+                    if ($request->fields['type'][$i] == 'number') {
+                        $validate_2 = array(
+                            'field_value'  => $request->fields['value_' . $request->fields['id'][$i]],
+                        );
+                        $validate_ = \Validator::make($validate_2, [
+                            'field_value'  => 'required|numeric|digits:10',
+                        ]);
+                        //  $c_++;
+                    }
+                    if ($request->fields['type'][$i] == 'date') {
+                        $validate_2 = array(
+                            'field_value'  => $request->fields['value_' . $request->fields['id'][$i]],
+                        );
+                        $validate_ = \Validator::make($validate_2, [
+                            // 'field_value'  => 'required|date',
+                        ]);
+                        // $c_++;
+                    }
+                    
                     if (isset($validate_)) {
 
                         if ($validate_->fails()) {
@@ -397,7 +399,8 @@ class EmployeeController extends Controller
                 $request->all(),
                 [
                     // 'name' => 'required',
-                    // 'aadhar_card_no' => 'required|numeric',
+                     'aadhar_card_no' => 'required|numeric|digits:12',
+                    
                     // 'dob' => 'required',
                     // 'gender' => 'required',
                     // 'phone' => 'required|numeric',
@@ -446,13 +449,13 @@ class EmployeeController extends Controller
                                 $request->fields['name'][$i]  => $request->file('files_' . $c),
                             );
 
-                            $validate_ = \Validator::make($validate_, [
-                                $request->fields['name'][$i]   => 'mimes:pdf,png,jpg,jpeg',
-                            ]);
-                            if ($validate_->fails()) {
-                                $validate_msg = $validate_->getMessageBag();
-                                return redirect()->back()->withInput()->with('error', $validate_msg);
-                            }
+                            // $validate_ = \Validator::make($validate_, [
+                            //     $request->fields['name'][$i]   => 'mimes:pdf,png,jpg,jpeg',
+                            // ]);
+                            // if ($validate_->fails()) {
+                            //     $validate_msg = $validate_->getMessageBag();
+                            //     return redirect()->back()->withInput()->with('error', $validate_msg);
+                            // }
                         } else {
                             if ($request->fields['value_old'][$c] == '') {
                                 $validate_msg = $request->fields['name'][$i];
@@ -778,11 +781,11 @@ class EmployeeController extends Controller
     function employeeNumber()
     {
         $latest = Employee::where('created_by', '=', \Auth::user()->creatorId())->latest()->first();
-        if (!$latest) {
-            return 1;
-        }
+        // if (!$latest) {
+        //     return 1;
+        // }
 
-        return $latest->employee_id + 1;
+        return $latest->max('employee_id') + 1;
     }
 
     public function export()

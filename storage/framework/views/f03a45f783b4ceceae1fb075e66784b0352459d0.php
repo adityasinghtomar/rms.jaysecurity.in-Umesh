@@ -27,21 +27,24 @@
 <table class="table table-striped mb-0 dataTable" >
     <thead>
     <tr>
-        <th><?php echo e(__('Name')); ?></th>
-        <th><?php echo e(__('Company Client Id')); ?></th>
-        <th><?php echo e(__('Company Client Unit Id')); ?></th>
-        <th><?php echo e(__('Designation')); ?></th>
-        <th><?php echo e(__('Amt')); ?></th>
-        <th><?php echo e(__('is_active')); ?></th>
-        <th><?php echo e(__('start_date')); ?></th>
-        <th><?php echo e(__('end_data')); ?></th>
+        <th><?php echo e(__('Branch')); ?></th>
+        <th><?php echo e(__('Company')); ?></th>
          <th width="3%"><?php echo e(__('Action')); ?></th>
     </tr>
     </thead>
     <tbody>
+        
     <?php $__currentLoopData = $salary; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sal): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        <tr>
-            <td><?php echo e($sal->name); ?></td>
+
+            <td>
+                <?php 
+                foreach ($branch as $key => $value) {
+                        if ($key==$sal->branch_id) {
+                           echo $value;
+                        }
+                } 
+                ?>
+            </td>
             <td>
                 <?php 
                 foreach ($company_client as $key => $value) {
@@ -49,31 +52,11 @@
                            echo $value;
                         }
                 } 
-                ?></td>
-            <td>
-                <?php 
-                foreach ($company_client_unit as $key => $value) {
-                        if ($key==$sal->company_client_unit_id) {
-                           echo $value;
-                        }
-                } 
-                ?></td>
-             <td>
-                <?php 
-                foreach ($designations as $key => $value) {
-                        if ($key==$sal->designation_id) {
-                           echo $value;
-                        }
-                } 
-                ?></td>   
+                ?>
             </td>
-            <td><?php echo e($sal->role_id); ?></td>
-            <td><?php echo e($sal->amt); ?></td>
-            <td><?php echo e($sal->is_active); ?></td>
-            <td><?php echo e($sal->start_date); ?></td>
-            <td><?php echo e($sal->end_date); ?></td>
+            
             <td>
-                    <a href="<?php echo e(route('salary.edit',$sal->id)); ?>" class="edit-icon bg-success" data-toggle="tooltip" data-original-title="<?php echo e(__('Edit')); ?>">
+                    <a href="<?php echo e(route('salary.edit',$sal->id)); ?>" class="edit-icon bg-success" data-toggle="tooltip" data-original-title="<?php echo e(__('Apply')); ?>">
                         <i class="fas fa-pencil-alt"></i>
                     </a>
                     <a href="<?php echo e(route('salary.show',$sal->id)); ?>" class="edit-icon bg-success" data-toggle="tooltip" data-original-title="View">

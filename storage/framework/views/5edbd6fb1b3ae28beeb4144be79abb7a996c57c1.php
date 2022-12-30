@@ -25,13 +25,15 @@
                         <table class="table table-striped mb-0 dataTable" >
                             <thead>
                             <tr>
+                                <th><?php echo e(__('Employee ID')); ?></th>
                                 <?php if(auth()->check() && auth()->user()->hasRole('company')): ?>
                                 <th><?php echo e(__('Employee Name')); ?></th>
                                 <?php endif; ?>
                                 <th><?php echo e(__('Branch')); ?></th>
-                                <th><?php echo e(__('Department')); ?></th>
+                                <th><?php echo e(__('Company')); ?></th>
                                 <th><?php echo e(__('Transfer Date')); ?></th>
-                                <th><?php echo e(__('Description')); ?></th>
+                                <th><?php echo e(__('Reason')); ?></th>
+                                 <th><?php echo e(__('Working Days')); ?></th>
                                 <?php if(Gate::check('Edit Transfer') || Gate::check('Delete Transfer')): ?>
                                      <th width="3%"><?php echo e(__('Action')); ?></th>
                                 <?php endif; ?>
@@ -40,13 +42,16 @@
                             <tbody class="font-style">
                             <?php $__currentLoopData = $transfers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $transfer): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
+                                    <td><?php echo e($transfer->employee_id); ?></td>
                                     <?php if(auth()->check() && auth()->user()->hasRole('company')): ?>
                                     <td><?php echo e(!empty($transfer->employee())?$transfer->employee()->name:''); ?></td>
                                     <?php endif; ?>
+                                    
                                     <td><?php echo e(!empty($transfer->branch())?$transfer->branch()->name:''); ?></td>
-                                    <td><?php echo e(!empty($transfer->department())?$transfer->department()->name:''); ?></td>
+                                    <td><?php echo e(!empty($transfer->company())?$transfer->company()->name:''); ?></td>
                                     <td><?php echo e(\Auth::user()->dateFormat($transfer->transfer_date)); ?></td>
                                     <td><?php echo e($transfer->description); ?></td>
+                                    <td><?php echo e($transfer->working_day); ?></td>
                                     <?php if(Gate::check('Edit Transfer') || Gate::check('Delete Transfer')): ?>
                                         <td class="text-right action-btns">
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Edit Transfer')): ?>

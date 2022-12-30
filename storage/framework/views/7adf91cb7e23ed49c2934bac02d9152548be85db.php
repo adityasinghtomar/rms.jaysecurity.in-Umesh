@@ -272,6 +272,19 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                     </div>
+                                    <div class="form-group col-md-6">
+                                        <?php echo e(Form::label('day',__('Day Of Joining'),['class'=>'form-control-label text-dark'])); ?>
+
+                                        <?php echo e(Form::text('day',null,array('class'=>'form-control'))); ?>
+
+                                    </div>
+                                    
+                                    <div class="form-group col-md-6">
+                                        <?php echo e(Form::label('pf',__('PF%'),['class'=>'form-control-label text-dark'])); ?>
+
+                                        <?php echo e(Form::text('pf',null,array('class'=>'form-control'))); ?>
+
+                                    </div>
                                     <div class="col-12 text-right">
                                         <input type="submit" value="<?php echo e(__('Save Change')); ?>" class="btn-create badge-blue">
                                     </div>

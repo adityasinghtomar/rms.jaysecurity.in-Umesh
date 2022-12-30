@@ -72,7 +72,13 @@
                     </a>
                 </td>
                 <td>{{ $employee->name }}</td>
-                <td>{{ $employee->branch }}</td>
+                <td> <?php 
+                foreach ($branch as $key => $value) {
+                        if ($key==$employee->branch_id) {
+                           echo $value;
+                        }
+                } 
+                ?></td>
                 <td>{{ $employee->client_name }}</td>
                 <td>{{ $employee->client_unit }}</td>
                 <td>{{ $employee->salary_type() }}</td>

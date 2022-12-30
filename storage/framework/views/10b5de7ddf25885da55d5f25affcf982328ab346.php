@@ -84,7 +84,13 @@
                     </a>
                 </td>
                 <td><?php echo e($employee->name); ?></td>
-                <td><?php echo e($employee->branch); ?></td>
+                <td> <?php 
+                foreach ($branch as $key => $value) {
+                        if ($key==$employee->branch_id) {
+                           echo $value;
+                        }
+                } 
+                ?></td>
                 <td><?php echo e($employee->client_name); ?></td>
                 <td><?php echo e($employee->client_unit); ?></td>
                 <td><?php echo e($employee->salary_type()); ?></td>
