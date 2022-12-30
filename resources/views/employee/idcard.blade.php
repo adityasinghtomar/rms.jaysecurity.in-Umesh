@@ -120,7 +120,7 @@
                 OFFICE :- 1ST Floor Above deep Super Store,Sai Kripa -02 Nani Daman – 396210 (U.T)</p></b>  
               <b><p style="margin-left: 60px;margin-top: -10px;font-size: 12px; font-family: 'Noto Sans TC', sans-serif;">Mobile No :- 8155933331/8155933337</p></b> 
           <img style="width: 76px; margin: -12px 0;" src="{{url('public/uploads/')}}/{{$photo}}" />
-          <ul style="margin-left: 54px;font-size: 11px;margin-top: -13%;"></br>
+          <ul style="margin-left: 54px;font-size: 13px;margin-top: -13%;"></br>
               <li style="list-style: none; font-weight: 50 font-family: 'Noto Sans TC', sans-serif;">
               <b> Name Of Emp : {{ $employee->name }}</b>
               </li>
@@ -140,7 +140,7 @@
           </ul>
              <p style="position: relative;text-align: right; bottom: 31px;">  Authorized Signature </p>
     </div>
-    <div class="container1" style="position: relative;bottom: 229px;border: 2px solid black;font-size: 10px;margin-left:412px; height: 229.98px;width: 366px;padding: 29px;">
+    <div class="container1" style="position: relative;bottom: 229px;border: 2px solid black;font-size: 11px;margin-left:412px; height: 229.98px;width: 366px;padding: 29px;">
            <b> <h5 style=" position: relative;bottom: 27px;margin-left: 22px;font-size: 17px;margin-top: 4px;color: #36a8f9 ">Instruction........</h5></b>
         <ol style="position: relative; bottom:36px;">
             <b><li>This card relates to individual identity only.</li></b>
