@@ -17,7 +17,10 @@ class IdcardController extends Controller
     {
         
             $employees = Employee::get();
+            //$employees = Employee::join('emp_role','emp_role.id','=','employees.roles')->get();
             //  $employees = Employee::paginate(4);
+            // echo $employees ;
+            // die;
 
             return view('idcard.index', compact( 'employees'));
         

@@ -43,7 +43,7 @@
               <b>Emp. Code No : {{ $user->employee_id }}</b>
               </li>
               <li style="list-style: none; font-weight: 50 font-family: 'Noto Sans TC', sans-serif;">
-              <b>Designation :Security Guard</b>
+              <b>Designation : {{ $user->roles }}</b>
               </li>
               <li style="list-style: none; font-weight: 50 font-family: 'Noto Sans TC', sans-serif;">
               <b>Date of Birth : {{ $user->dob }}</b>

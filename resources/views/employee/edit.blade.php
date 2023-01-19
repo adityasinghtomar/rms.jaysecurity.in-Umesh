@@ -319,10 +319,23 @@
             ?>
                                 <div class="choose-file form-group">
                                     <input type="hidden" name="fields[value_old][]" value="{{ $field_value }}">
-                                    <label for="document" class="form-control-label">
-                                        <div>Choose file here</div>
-                                        <input type="<?php echo $value->type; ?>" name="files_{{ $c }}"
-                                            class="form-control">
+                                    <label for="document" class="form-control-label" style="width:100% margin-bottom:10px">
+                                        <!-- <div>Choose file here</div> -->
+                                        <style>
+                                            .form-group input {
+                                                border-radius: 10px;
+                                                height: 40px;
+                                                box-shadow: none;
+                                                line-height: 40px;
+                                                font-size: 12px;
+                                                font-family: 'Montserrat-SemiBold';
+                                                font-weight: normal;
+                                                min-width: 200px;
+                                            }
+                                        </style>
+                                         
+                                        <input style="opacity:1" type="<?php echo $value->type; ?>" name="files_{{$c}}"
+                                            class="form-control" value = "<?php echo $value->field_Id ?>" >
                                     </label>
                                     <p class="document_create"></p>
                                 </div>
@@ -517,13 +530,13 @@
                             <div class="form-group col-md-6">
                                 <label class="form-control-label" for="fields">{{ $value->field_name }}</label>
                                 <?php if ($value->type=='file') {
-            ?><input type="<?php echo $value->type; ?>" name="fields[value][]"
-                                    class="form-control"><?php
-        }
-        else{
-            ?><input type="<?php echo $value->type; ?>"
-                                    name="fields[value_][]" class="form-control"><?php
-        } ?>
+                            ?><input type="<?php echo $value->type; ?>" name="fields[value][]"
+                                                    class="form-control"><?php
+                        }
+                        else{
+                            ?><input type="<?php echo $value->type; ?>"
+                                                    name="fields[value_][]" class="form-control"><?php
+                        } ?>
 
                                 <input type="hidden" name="fields[id][]" class="form-control"
                                     value="<?php echo $value->id; ?>">
@@ -541,6 +554,7 @@
                 </div>
             </div>
         </div>
+        
         
 
     @endif

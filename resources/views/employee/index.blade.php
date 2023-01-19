@@ -27,7 +27,7 @@
             <div class="all-button-box">
                 <a href="#" class="btn btn-xs btn-white btn-icon-only width-auto"
                     data-url="{{ route('employee.file.import') }}" data-ajax-popup="true"
-                    data-title="{{ __('Import employee CSV file') }}">
+                    data-title="{{ __('Import employee CSV file') }}" >
                     <i class="fa fa-file-csv"></i> {{ __('Import') }}
                 </a>
             </div>
