@@ -114,6 +114,10 @@ Route::middleware('auth:api')->group(function () {
     Route::post('add-attendance-2/{id}', 'UserApiController@b ulkAttendance_2')->name('add-attendance-2');
     // Add New Company Unit Apis
     Route::post('add-company-unit', 'ClientCompanyUnitController@add_company_unit')->name('add-company-unit');
+
+    Route::get('get-employee', 'UserApiController@getEmployee')->name('get-employee');
+    
+    Route::get('employee-by-role', 'UserApiController@employeeByRole')->name('employee-by-role');
 });
 
 Route::post('/notification','NotificationController@sendNotification')->name('notification');

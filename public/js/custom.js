@@ -22,6 +22,35 @@ $(document).ready(function () {
         });
     }
 
+    if ($(".datedobpicker").length > 0) {
+        $('.datedobpicker').daterangepicker({
+            showDropdowns: true,
+            singleDatePicker: true,
+            format: 'yyyy-mm-dd',
+            locale: date_picker_locale,
+        });
+    }
+
+    var max_date = new Date();
+    max_date.setDate(max_date.getDate() - 8);
+
+
+    if($('.datejoinpicker').length > 0) {
+        $('.datejoinpicker').daterangepicker({
+            singleDatePicker: true,
+            startDate: max_date.toLocaleDateString(),
+            format: 'yyyy-mm-dd',
+            maxDate: max_date.toLocaleDateString()
+        });
+    }
+
+    $('#dob').change(function() {
+        var dob = new Date($(this).val());
+        var today = new Date();
+        var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
+        $("input[name='fields[value_15]']").val(age);
+    });
+
     if ($(".timepicker_format").length > 0) {
         $('.timepicker_format').timepicker({
             showMeridian: false,

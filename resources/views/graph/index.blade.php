@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('page-title')
-    {{ __('Attendance Graph') }}
+    {{ __('Attendance Graph Employee') }}
 @endsection
 
 @section('content')
@@ -12,24 +12,32 @@
 <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
 
 <script>
-var xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
-var yValues = [55, 49, 44, 24, 15];
+// var xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+// var yValues = [55, 49, 44, 24, 15];
+var chart_data = JSON.parse(`<?php echo $chart_employee; ?>`);
 var barColors = ["red", "green","blue","orange","brown"];
 
 new Chart("myChart", {
   type: "bar",
   data: {
-    labels: xValues,
+    labels: chart_data.label,
     datasets: [{
       backgroundColor: barColors,
-      data: yValues
+      data: chart_data.data
     }]
   },
   options: {
     legend: {display: false},
     title: {
       display: true,
-      text: "World Wine Production 2018"
+      text: "Attendance Graph Employee"
+    },
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
     }
   }
 });

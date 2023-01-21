@@ -80,7 +80,7 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>
 
             {!! Form::label('dob', __('Date of Birth'),['class'=>'form-control-label']) !!}<span class="text-danger pl-1">*</span>
 
-            {!! Form::text('dob', old('dob'), ['class' => 'form-control datepicker']) !!}
+            {!! Form::text('dob', old('dob'), ['class' => 'form-control datedobpicker', 'id' => 'dob']) !!}
 
         </div>
 
@@ -202,7 +202,7 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>
 
                      {!! Form::label('branch_id', __('Location'),['class'=>'form-control-label']) !!}<span class="text-danger pl-1">*</span>
 
-                        <select  id="branch" class="form-control" name="branch_id" required>
+                        <select  id="branch" class="form-control" name="branch_id">
 
                             <option value="">Select Branch</option>
 
@@ -226,7 +226,7 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>
 
                       {!! Form::label('company_client_id', __('Company'),['class'=>'form-control-label']) !!}<span class="text-danger pl-1">*</span>
 
-                        <select id="company" class="form-control" name="company_client_id" required>
+                        <select id="company" class="form-control" name="company_client_id">
 
                     
 
@@ -300,7 +300,7 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>
 
         {!! Form::label('company_doj', __('Company Date Of Joining'),['class'=>'form-control-label']) !!}
 
-        {!! Form::text('company_doj', null, ['class' => 'form-control datepicker','required' => 'required']) !!}
+        {!! Form::text('company_doj', null, ['class' => 'form-control datejoinpicker','required' => 'required']) !!}
 
     </div>
 

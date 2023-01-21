@@ -206,9 +206,9 @@ class EmployeeController extends Controller
 
                 [
 
-                    // 'name' => 'required',
+                    'name' => 'required',
 
-                    // 'dob' => 'required',
+                    'dob' => 'required',
 
                     // 'gender' => 'required',
 
@@ -218,7 +218,11 @@ class EmployeeController extends Controller
 
                     // 'document.*' => 'mimes:jpeg,png,jpg,gif,svg,pdf,doc,zip|max:20480',
 
-                    // 'company_client_id'    => 'required',
+                    'branch_id' => 'required',
+
+                    'employee_role' => 'required',
+
+                    'company_client_id'    => 'required',
 
                     // 'company_client_unit_id' => 'required',
 
@@ -502,7 +506,7 @@ class EmployeeController extends Controller
 
                     'company_client_unit_id' => $request['company_client_unit_id'],
 
-                    'company_doj' => $request['company_doj'],
+                    'company_doj' => \Carbon\Carbon::parse($request['company_doj'])->format('Y-m-d'),
 
                     'documents' => $document_implode,
 
@@ -803,7 +807,7 @@ class EmployeeController extends Controller
 
                     // 'name' => 'required',
 
-                     'aadhar_card_no' => 'required|numeric|digits:12',
+                     'aadhar_card_no' => 'required|numeric',
 
                     
 

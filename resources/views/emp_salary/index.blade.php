@@ -9,27 +9,56 @@
 <div class="card-body py-0">
     
                 <div class="row">
-                    <div class="col-sm-3"> 
-                     {{ Form::open(array('route' => array('setsalary.index'),'method'=>'get','id'=>'setsalary_filter')) }}
+                    <div class="col-sm-2"> 
+                     {{ Form::open(array('route' => array('emp_salary.index'),'method'=>'get','id'=>'salary_filter')) }}
                         @if(\Auth::user()->type != 'setsalary')
                             
                                     {{ Form::label('branch', __('Branch'),['class'=>'text-type'])}}
-                                        {{ Form::select('branch', $branch,isset($_GET['branch'])?$_GET['branch']:'', array('class' => 'form-control select2')) }}
+                                        {{-- {{ Form::select('branch', $branch,isset($_GET['branch'])?$_GET['branch']:'', array('class' => 'form-control select2')) }} --}}
+                                        <select name="branch" id="branch" class="form-control select2">
+                                            <option value="">--Selected One---</option>
+                                            @foreach ($branch as $key => $value)
+                                                <option value="{{ $key }}" @if(request()->branch == $key) selected @endif>{{ $value }}</option>
+                                            @endforeach
+                                        </select>
                                     
                      </div>
-                     <div class="col-sm-3">
+                     <div class="col-sm-2">
                         @endif
-                            {{ Form::open(array('route' => array('setsalary.index'),'method'=>'get','id'=>'setsalary_filter')) }}
+                            {{ Form::open(array('route' => array('emp_salary.index'),'method'=>'get','id'=>'salary_filter')) }}
                         @if(\Auth::user()->type != 'setsalary')
                             
                                         {{ Form::label('company', __('Company'),['class'=>'text-type'])}}
-                                        {{ Form::select('company', $company_client,isset($_GET['company'])?$_GET['company']:'', array('class' => 'form-control select2')) }}
+                                        <select name="company" id="company" class="form-control select2">
+                                            <option value="">--Selected One---</option>
+                                            @foreach ($company_client as $key => $value)
+                                                <option value="{{ $key }}" @if(request()->company == $key) selected @endif>{{ $value }}</option>
+                                            @endforeach
+                                        </select>
                                     
                       </div>
                             
                         @endif
                     <div class="col-sm-2">
-                            <a href="#" class="apply-btn" onclick="document.getElementById('setsalary_filter').submit(); return false;">
+                        {{ Form::label('month', __('Month'),['class'=>'text-type'])}}
+                        <select name="month" id="month" class="form-control select2">
+                            <option value="">--Selected One---</option>
+                            @foreach ($month as $key => $value)
+                                <option value="{{ $value }}" @if(request()->month == $value) selected @endif>{{ $key }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        {{ Form::label('year', __('Year'),['class'=>'text-type'])}}
+                        <select name="years" id="years" class="form-control select2">
+                            <option value="">--Selected One---</option>
+                            @for($y=date("Y")-10; $y<=date("Y"); $y++)
+                                <option value="{{ $y }}" @if(request()->years == $y) selected @endif>{{ $y }}</option>
+                            @endfor
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                            <a href="#" class="apply-btn" onclick="document.getElementById('salary_filter').submit(); return false;">
                                 <span class="btn-inner--icon"><i class="fas fa-search"></i></span>
                             </a>
                             <a href="{{route('setsalary.index')}}" class="reset-btn">

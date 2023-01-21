@@ -1,2 +1,4 @@
 .env
 *.zip
+storage/framework/
+storage/logs/laravel.log

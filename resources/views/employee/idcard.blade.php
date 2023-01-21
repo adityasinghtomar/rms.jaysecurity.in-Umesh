@@ -240,7 +240,11 @@
 
               <b><p style="margin-left: 85px;margin-top: -10px; margin-bottom:25px; font-size: 12px; font-family: 'Noto Sans TC', sans-serif;">Mobile No :- 8155933331/8155933337</p></b> 
 
-          <img style="width: 76px; margin: -12px 0; position:absolute; top:55%; left:8px;" src="{{url('public/uploads/')}}/{{$photo}}" />
+          @if ($photo)
+            <img style="width: 76px; margin: -12px 0; position:absolute; top:55%; left:8px;" src="{{url('public/uploads/')}}/{{$photo}}" />
+          @else
+              <img style="width: 80px; margin: -34px 0;" src="https://www.w3schools.com/howto/img_avatar.png" />
+          @endif
 
           <ul style="margin-left: 54px;font-size: 13px;margin-top: -13%;"></br>
 

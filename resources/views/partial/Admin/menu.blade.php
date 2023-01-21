@@ -161,9 +161,9 @@ $company_small_logo=Utility::getValByName('company_small_logo');
             <div class="collapse {{ (Request::route()->getName() == 'setsalary.index' || Request::route()->getName() == 'setsalary.show' ||  Request::route()->getName() == 'payslip.index' || Request::route()->getName() == 'payslip.employeepayslip' || Request::route()->getName() == 'setsalary.edit' || Request::route()->getName() == 'employeesalary' || Request::route()->getName() == 'payslip.employeepayslip' || Request::route()->getName() == 'payslip.pdf') ? 'show' : '' }}"
                  id="navbar-payroll">
                 <ul class="nav flex-column submenu-ul">
-                    <li class="nav-item {{ request()->is('setsalary*') ? 'active' : '' }}">
+                    {{-- <li class="nav-item {{ request()->is('setsalary*') ? 'active' : '' }}">
                         <a href="{{ route('setsalary.index') }}" class="nav-link">{{ __('Set Salary') }}</a>
-                    </li>
+                    </li> --}}
                     <li class="nav-item {{ request()->is('setsalary*') ? 'active' : '' }}">
                         <a href="{{ route('emp_salary.index') }}" class="nav-link">{{ __('Salary') }}</a>
                     </li>

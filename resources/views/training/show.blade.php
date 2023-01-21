@@ -35,7 +35,7 @@
                                 <td class="text-right">{{\Auth::user()->dateFormat($training->created_at)}}</td>
                             </tr>
                              <div class="avatar-parent-child">
-                                <img src="{{('')}}" class="avatar rounded-circle avatar-xl">
+                                <img src="{{!empty($training->employees)? !empty($training->employees->user->avatar)?asset(Storage::url('uploads/avatar')).'/'.$training->employees->user->avatar:asset(Storage::url('uploads/avatar')).'/avatar.png':asset(Storage::url('uploads/avatar')).'/avatar.png'}}" class="avatar rounded-circle avatar-xl">
                             </div>
                             </tbody>
                         </table>

@@ -32,9 +32,88 @@
                 
               <b><p style="margin-left: 60px;margin-top: -10px;font-size: 12px; font-family: 'Noto Sans TC', sans-serif;">Mobile No :- 8155933331/8155933337</p></b> 
           
-                      
+        <?php
+          $emp_field_data  =\App\Models\Employee_field_data::where('emp_id', $user->user_id)->where('field_id', '=', '22')->get();
+          $local_dist  = \App\Models\Employee_field_data::where('emp_id', $user->user_id)->where('field_id', '=', '40')->get();
+          $local_state  = \App\Models\Employee_field_data::where('emp_id', $user->user_id)->where('field_id', '=', '20')->get();
+          $local_pin  = \App\Models\Employee_field_data::where('emp_id', $user->user_id)->where('field_id', '=', '17')->get();
+          $image  = \App\Models\Employee_field_data::where('emp_id', $user->user_id)->where('field_id', '=', '8')->get();
+      
+          if(count($emp_field_data) == 0){
+            $field_value=" ";
+          } else{
+            foreach($emp_field_data as $var){}
+            $data = json_decode($var);
+            if (isset($data->field_id)&&($data->field_id=='22')) {
+              $field_value=$data->field_value;
+            }else{
+              $field_value=" ";
+            }
+          }
+        ?>
+
+        <?php
+          if(count($image) == 0){
+            $photo="uu";
+          } else{
+            foreach($image as $var1){}
+            $data1 = json_decode($var1);
+            if (isset($data1->field_id)&&($data1->field_id=='8')) {
+              $photo=$data1->field_value;
+            }else{
+              $photo="gaurd.jpg";
+            }
+          }
+        ?>
+
+        <?php 
+
+          if(count($local_dist) == 0){
+            $dist=" ";
+          } else{
+            foreach($local_dist as $var2){}
+            $data2 = json_decode($var2);
+            if (isset($data2->field_id)&&($data2->field_id=='40')) {
+              $dist=$data2->field_value;
+            }else{
+              $dist="";
+            }
+          }
+        ?>
+
+        <?php 
+          if(count($local_state) == 0){
+            $localstate1=" ";
+          } else{
+            foreach($local_state as $var3){}
+            $data3 = json_decode($var3);
+            if (isset($data3->field_id)&&($data3->field_id=='20')) {
+              $localstate1=$data3->field_value;
+            }else{
+              $localstate1=" ";
+            }
+          }
+        ?>
+
+        <?php 
+          if(count($local_pin) == 0){
+            $local_pin1="";
+          } else{
+            foreach($local_pin as $var4){}
+            $data4 = json_decode($var4);
+            if (isset($data4->field_id)&&($data4->field_id=='17')) {
+              $local_pin1=$data4->field_value;
+            }else{
+              $local_pin1="";
+            }
+          }
+        ?>
           
+         @if($photo)
+         <img style="width: 76px; margin: -12px 0;" src="{{url('public/uploads/')}}/{{$photo}}" />
+         @else
          <img style="width: 76px; margin: -12px 0;" src="https://www.w3schools.com/howto/img_avatar.png" />
+         @endif
           <ul style="margin-left: 54px;font-size: 11px;margin-top: -21%;">
               <li style="list-style: none; font-weight: 50 font-family: 'Noto Sans TC', sans-serif;">
               <b> Name Of Emp : {{ $user->name }}</b>
@@ -63,7 +142,8 @@
             <b><li>charge will be imposed for issue of Duplicate card</li></b>
             <b>  <li style="list-style: none;"></b>
             <b><h6 style=" font-size: 13px; margin-top: 6px; margin-left: -11px;font-size: 13px;margin-top: 3px;color: #36a8f9;">Residence Address</h6></b></li>
-            <b><p style="    margin-top: -9px;margin-left: -12px; font-size:9px">Room No-11 SukhlajikiChawlSayli DNH Silvassa-396230</p>
+            {{-- <b><p style="    margin-top: -9px;margin-left: -12px; font-size:9px">Room No-11 SukhlajikiChawlSayli DNH Silvassa-396230</p> --}}
+              <b><p style="margin-top: -9px;margin-left: -12px;">Address : {{$field_value}},{{$dist}},{{$localstate1}},{{$local_pin1}}</p></b>
         </ol>
      
         <ul style=" margin-left: -11px;position: relative;margin-left: -11px;bottom: 50px">

@@ -155,8 +155,8 @@
 
                          <div class="col-md-6">
                              <div class="form-group">
-                               {!! Form::label('exit_emp', __('Employee Exit Date'), ['class' => 'form-control-label']) !!}<span class="text-danger pl-1">*</span>
-                                <input type="date" id="exit_emp" name="exit_emp" class="form-control" >
+                               {!! Form::label('emp_exit_date', __('Employee Exit Date'), ['class' => 'form-control-label']) !!}<span class="text-danger pl-1">*</span>
+                                <input type="date" id="emp_exit_date" name="emp_exit_date" class="form-control" value="{{ $employee->emp_exit_date }}">
                               </div>
                        </div>
                        <div class="col-md-6">

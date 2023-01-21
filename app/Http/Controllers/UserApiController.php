@@ -31,6 +31,7 @@ use App\Models\Employee_field_data;
 
 use App\Models\AttendanceEmployee;
 use Carbon\Carbon;
+use App\Mail\TransferSend;
 
 class UserApiController extends Controller
 {
@@ -2409,6 +2410,7 @@ class UserApiController extends Controller
              $transfer             = new Transfer();
             $transfer->employee_id   = $request->employee_id;
             $transfer->branch_id     = $request->branch_id;
+            $transfer->department_id = $request->department_id;
             $transfer->company_client_id = $request->company_client_id;
             $transfer->transfer_date = $request->transfer_date;
             $transfer->description   = $request->reason;
@@ -2421,6 +2423,12 @@ class UserApiController extends Controller
               $employee->company_client_id = $request->company_client_id;
               $employee->date_of_exit = $request->transfer_date;
               $employee->save();
+
+            try {
+                Mail::to('company@example.com')->send(new TransferSend($transfer));
+            }catch(\Exception $e) {
+                //
+            }
             
          $res = [
             'status' => 200,
@@ -2854,5 +2862,51 @@ class UserApiController extends Controller
             $res,
             200
         );
+    }
+
+    public function getEmployee(Request $request)
+    {
+        $employee = Employee::query();
+
+        if($request->name) {
+            $employee = $employee->where('name', 'LIKE', '%'.$request->name.'%');
+        }
+
+        if($request->branch) {
+            $employee = $employee->where('branch_id', $request->branch);
+        }
+
+        if($request->company) {
+            $employee = $employee->where('company_client_id', $request->company);
+        }
+
+        $employee = $employee->get();
+
+        $current_date_time = Carbon::now()->toDateTimeString();
+
+        return response()->json([
+            'status' => 200,
+            'timestamp' => $current_date_time,
+            'data' => $employee
+        ]);
+    }
+
+    public function employeeByRole(Request $request)
+    {
+        $employee = Employee::query();
+
+        if($request->roles) {
+            $employee = $employee->where('roles', $request->roles);
+        }
+
+        $employee = $employee->get();
+
+        $current_date_time = Carbon::now()->toDateTimeString();
+
+        return response()->json([
+            'status' => 200,
+            'timestamp' => $current_date_time,
+            'data' => $employee
+        ]);
     }
 }

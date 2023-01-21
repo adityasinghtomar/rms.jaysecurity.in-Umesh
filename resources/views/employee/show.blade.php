@@ -258,7 +258,7 @@
         $c=0;
         if ($value->type=='file') {
              
-            ?><a href="{{url('public/uploads/')}}/{{$field_value}}"><i class="fa-solid fa-download" style="width:10px; height:10px;"></i></a>
+            ?><a href="{{url('public/uploads/')}}/{{$field_value}}" download><i class="fa fa-download" style="width:10px; height:10px;"></i></a>
             <img src="{{url('public/uploads/')}}/{{$field_value}}" width="100px" height="100px">
             
                             <?php 

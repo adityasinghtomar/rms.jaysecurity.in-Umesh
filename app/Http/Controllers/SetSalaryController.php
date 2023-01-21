@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-namespace App\Exports;
+// namespace App\Exports;
+
+use App\Exports\SetsalaryExport;
 use App\Models\Allowance;
 use App\Models\AllowanceOption;
 use App\Models\Commission;
@@ -22,6 +24,7 @@ use App\Models\Client_company;
 use App\Models\Client_company_unit;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SetSalaryController extends Controller
 {

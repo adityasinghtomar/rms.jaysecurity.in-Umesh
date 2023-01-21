@@ -38,6 +38,8 @@ class Employee extends Model
         'pf_number',
         'roles',
         'created_user_id',
+        'emp_exit_date',
+        'reason'
         // 'date'
     ];
 
