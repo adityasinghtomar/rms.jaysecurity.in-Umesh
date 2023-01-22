@@ -733,7 +733,6 @@ class EmployeeController extends Controller
             return redirect()->back()->with('error', __('Permission denied.'));
 
         }
-
     }
 
 
@@ -1431,20 +1430,9 @@ class EmployeeController extends Controller
     function employeeNumber()
 
     {
+        $employee = Employee::pluck('employee_id');
+        $latest = $employee->max();
 
-        // $latest = Employee::where('created_by', '=', \Auth::user()->creatorId())->latest()->first();
-        $latest = Employee::max('employee_id');
-
-        // if (!$latest) {
-
-        //     return 1;
-
-        // }
-
-        //echo $latest; die;
-
-        
-        //return $latest->max('employee_id') + 1;
         return $latest+1;
 
     }
