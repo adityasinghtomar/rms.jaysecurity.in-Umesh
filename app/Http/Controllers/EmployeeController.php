@@ -588,7 +588,7 @@ class EmployeeController extends Controller
 
                         $count_file;
 
-                        $count_file++;
+                        // $count_file++;
 
                         $data_field = array(
 
@@ -777,7 +777,6 @@ class EmployeeController extends Controller
             // dd($company_client_unit);
 
             return view('employee.edit', compact('employee', 'employeesId', 'branches',  'documents', 'fields', 'fields_atribute', 'emp_field_data', 'company_client', 'company_client_unit','roles'));
-
         } else {
 
             return redirect()->back()->with('error', __('Permission denied.'));
@@ -823,6 +822,9 @@ class EmployeeController extends Controller
                     // 'company_client' => 'required',
 
                     // // 'company_client_unit' => 'required',
+                    'branch_id' => 'required',
+
+                    'company_client_id'    => 'required',
 
                 ]
 
@@ -1040,54 +1042,51 @@ class EmployeeController extends Controller
 
             for ($i = 0; $i < $request->field_count; $i++) {
 
-
-
                 if ($request->fields['type'][$i] == 'file') {
-
+    
                     // dd($request->file("fields"));
-
-
-
-                    if ($request->file('files_' . $count_file)) {
-
-
-
-                        $file = $request->file("fields")['value'][$count_file];
-
-                        $file = $request->file('files_' . $count_file);
-
-
-
+    
+    
+    
+                    if ($request->file('files_'. $count_file)) {
+    
+    
+    
+                        // $file = $request->file("fields")['value'][$count_file];
+    
+                        $file = $request->file('files_'. $count_file);
+    
+    
+    
                         $input['file'] = rand() . '.' . $file->getClientOriginalExtension();
-
-                        // dd($input['file']);
-
+    
+    
                         $destinationPath = public_path() . "/uploads/";
-
-
-
-                        $extension = $request->file('files_' . $count_file)->extension();
-
+    
+    
+    
+                        $extension = $request->file('files_'. $count_file)->extension();
+    
                         $name = $input['file'];
-
-                        $image = $request->file('files_' . $count_file);
-
+    
+                        $image = $request->file('files_'. $count_file);
+    
                         $image->move($destinationPath, $name);
-
+    
                         $count_file++;
-
+    
                         $data_field = array(
-
+    
                             'field_id' => $request->fields['id'][$i],
-
-                            'field_value' => $input['file'],
-
+    
+                            'field_value' => $name,
+    
                             'emp_id' =>  $employee->user_id,
-
+    
                             'created_by' => \Auth::user()->creatorId()
-
+    
                         );
-
+    
                     } else {
                         $input['file'] = $request->fields['value_old'][$count_file];
                         $count_file++;
@@ -1112,7 +1111,7 @@ class EmployeeController extends Controller
                 $fields_id_ = 'fields_' . $request->fields['id'][$i];
                 if ($request->$fields_id_ == '0') {
                     $field_query = Employee_field_data::insert($data_field);
-
+    
                 } else {
                     // $field_query =Employee_field_data::where('id',$fields_.$request->fields['id'][$i])->update($data_field);
                     $field_query = Employee_field_data::where('id', $request->$fields_id_)->update($data_field);

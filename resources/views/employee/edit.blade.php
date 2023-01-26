@@ -112,10 +112,10 @@
                             </div>
                             <div class="form-group col-md-6">
                                 
-                     {!! Form::label('branch_id', __('Location'),['class'=>'form-control-label']) !!}
+                     {!! Form::label('branch_id', __('Location'),['class'=>'form-control-label']) !!}<span class="text-danger pl-1">*</span>
                         <select  id="branch" class="form-control" name="branch_id" >
                             @foreach ($branches as $data)
-                            <option value="{{$data->id}}">
+                            <option value="{{$data->id}}" @if($employee->branch_id == $data->id) selected @endif>
                                 {{$data->name}}
                             </option>
                             @endforeach
@@ -123,7 +123,7 @@
                     </div>
                     
                      <div class="form-group col-md-6">
-                      {!! Form::label('company_client_id', __('Company'),['class'=>'form-control-label']) !!}
+                      {!! Form::label('company_client_id', __('Company'),['class'=>'form-control-label']) !!}<span class="text-danger pl-1">*</span>
                         <select id="company" class="form-control" name="company_client_id">
                     
                         </select>
@@ -289,8 +289,6 @@
                 </div>
             </div>
         </div> 
-       
-  
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-fluid">
@@ -314,7 +312,7 @@
 
                                 <label class="form-control-label" for="fields">{{ $value->field_name }}</label>
                                 <?php 
-        $c=0;
+                                $c=0;
         if ($value->type=='file') {
             ?>
                                 <div class="choose-file form-group">
@@ -334,15 +332,16 @@
                                             }
                                         </style>
                                          
-                                        <input style="opacity:1" type="<?php echo $value->type; ?>" name="files_{{$c}}"
+                                        <input style="opacity:1" type="<?php echo $value->type; ?>" name="files_{{ $val->id }}"
                                             class="form-control" value = "<?php echo $value->field_Id ?>" >
                                     </label>
                                     <p class="document_create"></p>
                                 </div>
                                 <!-- <input type="<?php echo $value->type; ?>" name="fields[value][]" class="form-control"> --><?php 
-            $c++;
+
         }
         else if ($value->type=='radio') {
+            $c++;
             ?>
                                 <div class="row"><?php
             foreach ($fields_atribute as $atribute) {
@@ -659,10 +658,14 @@
     </script>
     <script>
         $(document).ready(function () {
-            $('#branch').on('change', function () {
+            $('#branch').trigger('change');
+        });
+
+        $('#branch').on('change', function () {
                 var branch_id = this.value;
+                var company_client_id = `{{ $employee->company_client_id}}`;
                 $("#company").html('');
-                console.log('branch_id');
+                console.log(company_client_id);
                 $.ajax({
                     url: "{{url('branch-company')}}",
                     type: "POST",
@@ -672,17 +675,18 @@
                     },
                     dataType: 'json',
                     success: function (response) {
-                        
                         $("#company").html('<option value="">Select Company</option>');
                         $.each(response.company, function (index, value) {
-                            console.log(value)
-                            $("#company").append('<option value="' +value.id + '">' + value.name + '</option>');
+                            var selected = '';
+                            if(company_client_id == value.id) {
+                                selected = 'selected';
+                            }
+
+                            $("#company").append('<option value="' +value.id + '" ' + selected +'>' + value.name + '</option>');
                         });
                     }
                 });
             });
-            
-        });
     </script>
  
 @endpush

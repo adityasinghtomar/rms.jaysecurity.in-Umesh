@@ -46,9 +46,10 @@
 
         <!--{!! Form::text('name', old('name'), ['class' => 'form-control','required' => 'required']) !!}-->
 
-        <input id="name" type="text" class="form-control" name="name" placeholder="Enter Name"  onkeypress="return (event.charCode > 64 && 
+        {{-- <input id="name" type="text" class="form-control" name="name" placeholder="Enter Name"  onkeypress="return (event.charCode > 64 && 
 
-event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/> 
+event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>  --}}
+        <input id="name" type="text" class="form-control" name="name" placeholder="Enter Name"/> 
 
     </div>
 
