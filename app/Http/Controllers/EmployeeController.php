@@ -1052,7 +1052,9 @@ class EmployeeController extends Controller
     
     
     
-                        // $file = $request->file("fields")['value'][$count_file];
+                        if($request->file("fields")) {
+                            $file = $request->file("fields")['value'][$count_file];
+                        }
     
                         $file = $request->file('files_'. $count_file);
     
