@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Facades\Mail;
 
+use Illuminate\Support\Facades\Storage;
 
 
 use App\Imports\EmployeesImport;
@@ -84,9 +85,9 @@ class EmployeeController extends Controller
 
     {
 
-        
 
-        
+
+
 
         // $notification = "hiii";
 
@@ -104,9 +105,9 @@ class EmployeeController extends Controller
 
                 // print $employees;
 
-                
 
-                
+
+
 
             } else {
 
@@ -122,7 +123,7 @@ class EmployeeController extends Controller
 
                 // print $employees;die;
 
- 
+
 
             }
 
@@ -196,7 +197,7 @@ class EmployeeController extends Controller
 
     { //dd($request->company_client_unit_id);
 
-         
+
 
         if (\Auth::user()->can('Create Employee')) {
 
@@ -214,7 +215,7 @@ class EmployeeController extends Controller
 
                     'aadhar_card_no' => 'required|unique:employees|numeric|digits:12',
 
-                    
+
 
                     // 'document.*' => 'mimes:jpeg,png,jpg,gif,svg,pdf,doc,zip|max:20480',
 
@@ -248,7 +249,7 @@ class EmployeeController extends Controller
 
             //       }
 
-                
+
 
             ///////////////new code///////////////////////////
 
@@ -394,7 +395,7 @@ class EmployeeController extends Controller
 
                     }
 
-                    
+
 
                     if (isset($validate_)) {
 
@@ -532,7 +533,7 @@ class EmployeeController extends Controller
 
                     'status' => $request['status'],
 
-                    
+
 
                     'roles' => $request['employee_role'],
 
@@ -540,7 +541,7 @@ class EmployeeController extends Controller
 
                     'reason' => $request['reason'],
 
-                    
+
 
                     'created_by' => \Auth::user()->creatorId(),
 
@@ -586,9 +587,7 @@ class EmployeeController extends Controller
 
                         $image->move($destinationPath, $name);
 
-                        $count_file;
-
-                        // $count_file++;
+                        $count_file++;
 
                         $data_field = array(
 
@@ -770,7 +769,7 @@ class EmployeeController extends Controller
             $fields = Employee_field::where('status', '=', '1')->get();
 
             // $image  = Employee_field_data::where('emp_id', $employee->user_id)->where('field_id', '=', '8')->get();
-            
+
 
             $fields_atribute = Employee_field_atribute::get();
 
@@ -807,7 +806,7 @@ class EmployeeController extends Controller
 
                      'aadhar_card_no' => 'required|numeric',
 
-                    
+
 
                     // 'dob' => 'required',
 
@@ -1030,65 +1029,64 @@ class EmployeeController extends Controller
 
             ////////////extra field//////////////////////////
 
+            $oldFieldDataArr = Employee_field_data::where('emp_id', $employee->user_id)->get()->toArray();
+            $oldFieldData = collect($oldFieldDataArr);
+
             $count_field = count($request->fields['type']); //die;
 
             $count_file = 0;
 
             $count_other = 0;
 
+            $fileNumberFinish = [];
 
-
-
+            $dataFieldAll = [];
 
             for ($i = 0; $i < $request->field_count; $i++) {
 
                 if ($request->fields['type'][$i] == 'file') {
-    
-                    // dd($request->file("fields"));
-    
-    
-    
-                    if ($request->file('files_'. $count_file)) {
-    
-    
-    
+
+                    $fileNumber = 0;
+
+                    foreach($request->files as $key=>$val) {
+                      if (!in_array($key, $fileNumberFinish)) {
+                        $fileNumber = $key;
+                        $fileNumberFinish[] = $key;
+                        break;
+                      }
+                    }
+
+                    $fileNumber = str_replace('files_', '', $fileNumber);
+
+                    if ($request->file('files_'. $fileNumber)) {
+
                         if($request->file("fields")) {
-                            $file = $request->file("fields")['value'][$count_file];
+                            $file = $request->file("fields")['value'][$fileNumber];
                         }
-    
-                        $file = $request->file('files_'. $count_file);
-    
-    
-    
+
+                        $file = $request->file('files_'. $fileNumber);
+
                         $input['file'] = rand() . '.' . $file->getClientOriginalExtension();
-    
-    
+
                         $destinationPath = public_path() . "/uploads/";
-    
-    
-    
-                        $extension = $request->file('files_'. $count_file)->extension();
-    
+
+                        $extension = $request->file('files_'. $fileNumber)->extension();
+
                         $name = $input['file'];
-    
-                        $image = $request->file('files_'. $count_file);
-    
+
+                        $image = $request->file('files_'. $fileNumber);
+
                         $image->move($destinationPath, $name);
-    
+
                         $count_file++;
-    
+
                         $data_field = array(
-    
                             'field_id' => $request->fields['id'][$i],
-    
                             'field_value' => $name,
-    
                             'emp_id' =>  $employee->user_id,
-    
                             'created_by' => \Auth::user()->creatorId()
-    
                         );
-    
+
                     } else {
                         $input['file'] = $request->fields['value_old'][$count_file];
                         $count_file++;
@@ -1100,25 +1098,33 @@ class EmployeeController extends Controller
                         );
                     }
                 } else {
-                    if (isset($request->fields['value_' . $request->fields['id'][$i]])) {
+                        $fieldValue = null;
+                        if(isset($request->fields['value_' . $request->fields['id'][$i]])) {
+                          $fieldValue = $request->fields['value_' . $request->fields['id'][$i]];
+                        }
                         $data_field = array(
                             'field_id'   => $request->fields['id'][$i],
-                            'field_value' => $request->fields['value_' . $request->fields['id'][$i]],
+                            'field_value' => $fieldValue,
                             'emp_id'     =>  $employee->user_id,
                             'created_by' => \Auth::user()->creatorId()
                         );
                         $count_other++;
-                    }
                 }
-                $fields_id_ = 'fields_' . $request->fields['id'][$i];
-                if ($request->$fields_id_ == '0') {
+
+                $fields_id_ = $request->fields['id'][$i];
+
+                //check emp_id
+                $fieldDataExist = $oldFieldData->where('emp_id', $employee->user_id)->where('field_id', $request->fields['id'][$i]);
+                if($fieldDataExist->isEmpty()) {
                     $field_query = Employee_field_data::insert($data_field);
-    
                 } else {
                     // $field_query =Employee_field_data::where('id',$fields_.$request->fields['id'][$i])->update($data_field);
-                    $field_query = Employee_field_data::where('id', $request->$fields_id_)->update($data_field);
+                    $field_query = Employee_field_data::where('field_id', $request->fields['id'][$i])->where('emp_id', $employee->user_id)->update($data_field);
                 }
-            } 
+
+                $dataFieldAll[] = $data_field;
+
+            }
 
             //////////////end//////////////////////////
 
@@ -1197,7 +1203,7 @@ class EmployeeController extends Controller
 
                 return redirect()->route('employee.show', \Illuminate\Support\Facades\Crypt::encrypt($employee->id))->with('success', 'Employee successfully updated.');
 
-            } 
+            }
 
         } else {
 
@@ -1212,13 +1218,13 @@ class EmployeeController extends Controller
 
     {
 
-        
+
 
         $SERVER_API_KEY = 'AAAAQEoZRGc:APA91bGAZgvMUJnpYYHgGSce208S2SiPqQxITjPyKMN9mu06ueOdXkyPuaDriAEkxhuQ6FvymfwF-tAQtgIlvGH0um_r_-mdSuSXCZKKmKFgdXgFWYcKRLI4DequOhvHlzGyvJuVwBHK';
 
         //  "registration_ids" => $device_token,
 
-        
+
 
         $meg = [
 
@@ -1228,7 +1234,7 @@ class EmployeeController extends Controller
 
             ];
 
-        
+
 
         $data = [
 
@@ -1238,7 +1244,7 @@ class EmployeeController extends Controller
 
                 "title" => $data['message'],
 
-                "body" => $data['body'],  
+                "body" => $data['body'],
 
             ],
 
@@ -1248,11 +1254,11 @@ class EmployeeController extends Controller
 
         ];
 
-        
+
 
         $dataString = json_encode($data);
 
-        
+
 
         $headers = [
 
@@ -1262,11 +1268,11 @@ class EmployeeController extends Controller
 
         ];
 
-    
+
 
         $ch = curl_init();
 
-      
+
 
         curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
 
@@ -1282,13 +1288,13 @@ class EmployeeController extends Controller
 
         curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
 
-               
+
 
         $response = curl_exec($ch);
 
         return $response;
 
-        
+
 
     }
 
@@ -1400,7 +1406,7 @@ class EmployeeController extends Controller
 
             $designations = Designation::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
 
-           
+
 
             //  print $roles ;die;
 
@@ -1596,7 +1602,7 @@ class EmployeeController extends Controller
 
 
 
-            
+
 
             $employeeData->created_by          = \Auth::user()->creatorId();
 
@@ -1794,7 +1800,7 @@ class EmployeeController extends Controller
 
             // $empId        = Crypt::decrypt($id);
 
-            
+
 
             $employee     = Employee::find($id);
 
@@ -1820,7 +1826,7 @@ class EmployeeController extends Controller
 
             $fields_atribute = Employee_field_atribute::get();
 
-            $employees     = Employee::get();    
+            $employees     = Employee::get();
 
             return view('employee.idcard', compact('employee', 'employeesId','local_dist','local_state','local_pin','employees','documents','emp_field_data','image','fields','fields_atribute'));
 
@@ -1894,7 +1900,7 @@ class EmployeeController extends Controller
 
         }
 
-        
+
 
         $employees = (new EmployeesImport())->toArray(request()->file('file'))[0];
 
@@ -1960,7 +1966,7 @@ class EmployeeController extends Controller
 
 
 
-            
+
 
             $employeeData->created_by          = \Auth::user()->creatorId();
 
@@ -1982,7 +1988,7 @@ class EmployeeController extends Controller
 
        }
 
-   
+
 
         if (empty($errorArray)) {
 
@@ -1990,11 +1996,11 @@ class EmployeeController extends Controller
 
             $data['msg']    = __('Record successfully imported');
 
-        
 
-            return redirect()->back()->with($data['status'], $data['msg']); 
 
-        
+            return redirect()->back()->with($data['status'], $data['msg']);
+
+
 
         } else {
 
@@ -2002,15 +2008,15 @@ class EmployeeController extends Controller
 
             $data['msg']    = count($errorArray) . ' ' . __('Record imported fail out of' . ' ' . $totalCustomer . ' ' . 'record');
 
-            return redirect()->back()->with($data['status'], $data['msg']); 
+            return redirect()->back()->with($data['status'], $data['msg']);
 
-        
+
 
         }
 
 
 
- 
+
 
     }
 
@@ -2041,4 +2047,3 @@ class EmployeeController extends Controller
 
 
 }
-

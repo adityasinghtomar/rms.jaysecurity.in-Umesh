@@ -69,13 +69,13 @@
              <div class="form-group">
               {!! Form::label('pf_number', __('PF Number'),['class'=>'form-control-label']) !!}<span class="text-danger pl-1">*</span>
               {!! Form::text('pf_number',old('pf_number'), ['class' => 'form-control']) !!}
-             </div> 
-           
+             </div>
+
                     <!--<div class="form-group">-->
                     <!--    {!! Form::label('address', __('Address'), ['class' => 'form-control-label']) !!}<span class="text-danger pl-1">*</span>-->
                     <!--    {!! Form::textarea('address', null, ['class' => 'form-control', 'rows' => 2]) !!}-->
                     <!--</div>-->
-                    
+
                     @if(Auth::user()->type == "company")
                     <div class="form-group">
                         <label for="">Status</label>
@@ -111,7 +111,7 @@
                                 {!! Form::text('employee_id', $employeesId, ['class' => 'form-control', 'disabled' => 'disabled']) !!}
                             </div>
                             <div class="form-group col-md-6">
-                                
+
                      {!! Form::label('branch_id', __('Location'),['class'=>'form-control-label']) !!}<span class="text-danger pl-1">*</span>
                         <select  id="branch" class="form-control" name="branch_id" >
                             @foreach ($branches as $data)
@@ -121,18 +121,18 @@
                             @endforeach
                         </select>
                     </div>
-                    
+
                      <div class="form-group col-md-6">
                       {!! Form::label('company_client_id', __('Company'),['class'=>'form-control-label']) !!}<span class="text-danger pl-1">*</span>
                         <select id="company" class="form-control" name="company_client_id">
-                    
+
                         </select>
                     </div>
                             <!--<div class="form-group col-md-6">-->
                             <!--    {{ Form::label('branch_id', __('Branch'), ['class' => 'form-control-label']) }}-->
                             <!--    {{ Form::select('branch_id', $branches, null, ['class' => 'form-control select2', 'required' => 'required']) }}-->
                             <!--</div>-->
-                            
+
                             <!--<div class="form-group col-md-6">-->
                             <!--    {{ Form::label('company_client_id', __('Company Client'), ['class' => 'form-control-label']) }}-->
                             <!--    {{ Form::select('company_client', $company_client, null, ['class' => 'form-control select2', 'required' => 'required']) }}-->
@@ -283,12 +283,12 @@
                                 {!! Form::label('pan_number', __('PAN Number'), ['class' => 'form-control-label']) !!}
                                 {!! Form::text('pan_number', null, ['class' => 'form-control']) !!}
                             </div>
-                             
+
                         </div>
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-fluid">
@@ -311,7 +311,7 @@
                             <div class="form-group col-md-6">
 
                                 <label class="form-control-label" for="fields">{{ $value->field_name }}</label>
-                                <?php 
+                                <?php
                                 $c=0;
         if ($value->type=='file') {
             ?>
@@ -331,13 +331,13 @@
                                                 min-width: 200px;
                                             }
                                         </style>
-                                         
-                                        <input style="opacity:1" type="<?php echo $value->type; ?>" name="files_{{ $val->id }}"
-                                            class="form-control" value = "<?php echo $value->field_Id ?>" >
+
+                                        <input style="opacity:1" type="<?php echo $value->type; ?>" name="files_{{ $value->id }}"
+                                            class="form-control" value = "" >
                                     </label>
                                     <p class="document_create"></p>
                                 </div>
-                                <!-- <input type="<?php echo $value->type; ?>" name="fields[value][]" class="form-control"> --><?php 
+                                <!-- <input type="<?php echo $value->type; ?>" name="fields[value][]" class="form-control"> --><?php
 
         }
         else if ($value->type=='radio') {
@@ -360,7 +360,7 @@
                                         </div>
                                     </div>
 
-                                    <?php   
+                                    <?php
                 }
             }
             ?>
@@ -412,7 +412,7 @@
           }
           ?>
                                     </select>
-                                </div><?php 
+                                </div><?php
         }
         else{
             ?>
@@ -553,8 +553,8 @@
                 </div>
             </div>
         </div>
-        
-        
+
+
 
     @endif
     @if (\Auth::user()->type != 'employee')
@@ -652,7 +652,7 @@
             if ($(this).val() === 'Reject') {
                 $('#note').show();
             } else{
-                $('#note').hide();  
+                $('#note').hide();
             }
         })
     </script>
@@ -688,5 +688,5 @@
                 });
             });
     </script>
- 
+
 @endpush
