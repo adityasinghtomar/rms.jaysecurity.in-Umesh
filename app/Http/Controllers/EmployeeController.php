@@ -473,10 +473,6 @@ class EmployeeController extends Controller
 
             }
 
-
-
-            // dd($request);
-
             $employee = Employee::create(
 
                 [
@@ -559,72 +555,79 @@ class EmployeeController extends Controller
 
             $count_other = 0;
 
+            $fileNumberFinish = [];
+
             for ($i = 0; $i < $request->field_count; $i++) {
-
-
 
                 if ($request->fields['type'][$i] == 'file') {
 
-                    if (isset($request->file("fields")['value'][$count_file])) {
+                      $fileNumber = 0;
 
+                      foreach($request->files as $key=>$val) {
+                        if (!in_array($key, $fileNumberFinish)) {
+                          $fileNumber = $key;
+                          $fileNumberFinish[] = $key;
+                          break;
+                        }
+                      }
 
+                      $fileNumber = str_replace('files_', '', $fileNumber);
 
-                        $file = $request->file("fields")['value'][$count_file];
+                      if ($request->file('files_'. $fileNumber)) {
 
+                          if($request->file("fields")) {
+                              $file = $request->file("fields")['value'][$fileNumber];
+                          }
 
+                          $file = $request->file('files_'. $fileNumber);
 
-                        $input['file'] = rand() . '.' . $file->getClientOriginalExtension();
+                          $input['file'] = rand() . '.' . $file->getClientOriginalExtension();
 
-                        $destinationPath = public_path() . "/uploads/";
+                          $destinationPath = public_path() . "/uploads/";
 
+                          $extension = $request->file('files_'. $fileNumber)->extension();
 
+                          $name = $input['file'];
 
-                        $extension = $request->file("fields")['value'][$count_file]->extension();
+                          $image = $request->file('files_'. $fileNumber);
 
-                        $name = $input['file'];
+                          $image->move($destinationPath, $name);
 
-                        $image = $request->file("fields")['value'][$count_file];
+                          $count_file++;
 
-                        $image->move($destinationPath, $name);
+                          $data_field = array(
+                              'field_id' => $request->fields['id'][$i],
+                              'field_value' => $name,
+                              'emp_id' =>  $employee->user_id,
+                              'created_by' => \Auth::user()->creatorId()
+                          );
 
-                        $count_file++;
-
+                      } else {
+                        $fieldValue = null;
+                        if(isset($request->fields['value_' . $request->fields['id'][$i]])) {
+                          $fieldValue = $request->fields['value_' . $request->fields['id'][$i]];
+                        }
                         $data_field = array(
-
-                            'field_id' => $request->fields['id'][$i],
-
-                            'field_value' => $input['file'],
-
-                            'emp_id' =>  $user->id,
-
+                            'field_id'   => $request->fields['id'][$i],
+                            'field_value' => $fieldValue,
+                            'emp_id'     =>  $employee->user_id,
                             'created_by' => \Auth::user()->creatorId()
-
                         );
-
-                    }
-
-                } else {
-
-                    if (isset($request->fields['value_' . $request->fields['id'][$i]])) {
-
-                        $data_field = array(
-
-                            'field_id' => $request->fields['id'][$i],
-
-                            // 'field_value'=>$request->fields['value_'][$count_other],
-
-                            'field_value' => $request->fields['value_' . $request->fields['id'][$i]],
-
-                            'emp_id' =>  $user->id,
-
-                            'created_by' => \Auth::user()->creatorId()
-
-                        );
-
                         $count_other++;
 
-                    }
-
+                        }
+                        
+                } else {
+                    $fieldValue = null;
+                  if(isset($request->fields['value_' . $request->fields['id'][$i]])) {
+                    $fieldValue = $request->fields['value_' . $request->fields['id'][$i]];
+                  }
+                  $data_field = array(
+                      'field_id'   => $request->fields['id'][$i],
+                      'field_value' => $fieldValue,
+                      'emp_id'     =>  $employee->user_id,
+                      'created_by' => \Auth::user()->creatorId()
+                  );
                 }
 
                 // echo "<pre>";print_r($data_field);
@@ -1040,8 +1043,6 @@ class EmployeeController extends Controller
 
             $fileNumberFinish = [];
 
-            $dataFieldAll = [];
-
             for ($i = 0; $i < $request->field_count; $i++) {
 
                 if ($request->fields['type'][$i] == 'file') {
@@ -1121,8 +1122,6 @@ class EmployeeController extends Controller
                     // $field_query =Employee_field_data::where('id',$fields_.$request->fields['id'][$i])->update($data_field);
                     $field_query = Employee_field_data::where('field_id', $request->fields['id'][$i])->where('emp_id', $employee->user_id)->update($data_field);
                 }
-
-                $dataFieldAll[] = $data_field;
 
             }
 

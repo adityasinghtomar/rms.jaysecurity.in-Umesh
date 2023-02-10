@@ -46,10 +46,10 @@
 
         <!--{!! Form::text('name', old('name'), ['class' => 'form-control','required' => 'required']) !!}-->
 
-        {{-- <input id="name" type="text" class="form-control" name="name" placeholder="Enter Name"  onkeypress="return (event.charCode > 64 && 
+        {{-- <input id="name" type="text" class="form-control" name="name" placeholder="Enter Name"  onkeypress="return (event.charCode > 64 &&
 
 event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>  --}}
-        <input id="name" type="text" class="form-control" name="name" placeholder="Enter Name"/> 
+        <input id="name" type="text" class="form-control" name="name" placeholder="Enter Name"/>
 
     </div>
 
@@ -65,7 +65,7 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>  --}}
 
     </div>
 
-    
+
 
     <!--<div class="form-group col-md-6">-->
 
@@ -143,7 +143,7 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>  --}}
 
     </div>
 
-    
+
 
     <!--<div class="form-group">-->
 
@@ -153,7 +153,7 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>  --}}
 
     <!--</div>-->
 
-    
+
 
     <div class="form-group col-md-6">
 
@@ -169,7 +169,7 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>  --}}
 
         {!! Form::text('pf_number',old('pf_number'), ['class' => 'form-control']) !!}
 
-    </div>    
+    </div>
 
 </div>
 
@@ -221,7 +221,7 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>  --}}
 
                     </div>
 
-                    
+
 
                      <div class="form-group col-md-6">
 
@@ -229,13 +229,13 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>  --}}
 
                         <select id="company" class="form-control" name="company_client_id">
 
-                    
+
 
                         </select>
 
                     </div>
 
-                    
+
 
     <!--<div class="form-group col-md-6">-->
 
@@ -257,9 +257,9 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>  --}}
 
     <!--</div>-->
 
-    
 
-    
+
+
 
 
 
@@ -271,7 +271,7 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>  --}}
 
     <!--</div>-->
 
-    
+
 
     <!--<div class="form-group col-md-6">-->
 
@@ -285,7 +285,7 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>  --}}
 
     <!--</div>-->
 
-    
+
 
     <div class="form-group col-md-6">
 
@@ -295,7 +295,7 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>  --}}
 
     </div>
 
-    
+
 
     <div class="form-group col-md-6 ">
 
@@ -453,7 +453,7 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>  --}}
 
     </div>
 
-    
+
 
 </div>
 
@@ -499,7 +499,7 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>  --}}
 
                     <!--<div>Choose file here</div>-->
 
-                     <input type="<?php echo $value->type; ?>" name="fields[value][]" class="form-control" style="opacity:unset;">
+                     <input type="<?php echo $value->type; ?>" name="files_{{ $value->id }}" class="form-control" style="opacity:unset;">
 
                 </label>
 
@@ -533,9 +533,9 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>  --}}
 
             </div>
 
-    
 
-                 <?php   
+
+                 <?php
 
                 }
 
@@ -591,7 +591,7 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>  --}}
 
             <div class="row">
 
-            <select class="form-control select2-multiple" id="{{$atribute->option_name}}" name="fields[value_{{ $value->id }}]" data-toggle="select2" data-placeholder="{{ __('Select...') }}" style="border-radius: 10px;height: 40px;box-shadow: none;line-height: 40px;font-size: 12px;font-family: 'Montserrat-SemiBold';font-weight: normal;">   
+            <select class="form-control select2-multiple" id="{{$atribute->option_name}}" name="fields[value_{{ $value->id }}]" data-toggle="select2" data-placeholder="{{ __('Select...') }}" style="border-radius: 10px;height: 40px;box-shadow: none;line-height: 40px;font-size: 12px;font-family: 'Montserrat-SemiBold';font-weight: normal;">
 
             <?php
 
@@ -603,7 +603,7 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>  --}}
 
             <option value="{{$atribute->option_value}}">{{$atribute->option_name}}</option>
 
-        
+
 
             <?php
 
@@ -615,7 +615,7 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>  --}}
 
           </select>
 
-          </div><?php 
+          </div><?php
 
         }
 
@@ -627,7 +627,7 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>  --}}
 
         } ?>
 
-        
+
 
         <input type="hidden" name="fields[id][]" class="form-control" value="<?php echo $value->id; ?>">
 
@@ -635,7 +635,7 @@ event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>  --}}
 
         <input type="hidden" name="fields[type][]" class="form-control" value="<?php echo $value->type; ?>">
 
-        <input type="hidden" name="fields[mandatory][]" class="form-control" value="<?php echo $value->mandatory; ?>">            
+        <input type="hidden" name="fields[mandatory][]" class="form-control" value="<?php echo $value->mandatory; ?>">
 
        <!--  {!! Form::label('account_holder_name', __('Account Holder Name'),['class'=>'form-control-label']) !!}
 
@@ -823,7 +823,7 @@ $.each(data, function (key, value) {
 
                     success: function (response) {
 
-                        
+
 
                         $("#company").html('<option value="">Select Company</option>');
 
@@ -841,7 +841,7 @@ $.each(data, function (key, value) {
 
             });
 
-            
+
 
         });
 
@@ -931,7 +931,6 @@ $.each(data, function (key, value) {
 
 
 
-  
+
 
 @endpush
-
