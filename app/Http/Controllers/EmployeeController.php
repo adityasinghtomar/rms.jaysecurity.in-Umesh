@@ -616,7 +616,7 @@ class EmployeeController extends Controller
                         $count_other++;
 
                         }
-                        
+
                 } else {
                     $fieldValue = null;
                   if(isset($request->fields['value_' . $request->fields['id'][$i]])) {
@@ -1909,7 +1909,29 @@ class EmployeeController extends Controller
 
        for ($i = 1; $i <= count($employees) - 1; $i++) {
 
+             $user = User::create(
 
+                 [
+
+                     'name' => $employees[$i][0],
+
+                     // 'email' => $request['email'],
+
+                     'password' => Hash::make(\Str::random(32)),
+
+                     'type' => 'employee',
+
+                     'lang' => 'en',
+
+                     'created_by' => \Auth::user()->creatorId(),
+
+                 ]
+
+             );
+
+             $user->save();
+
+             $user->assignRole('Employee');
 
             $employee = $employees[$i];
 
@@ -1920,6 +1942,8 @@ class EmployeeController extends Controller
              $employeeData = new Employee();
 
             $employeeData->name                = $employee[0];
+
+            $employeeData->user_id             = $user->id;
 
             $employeeData->dob                 = $employee[1];
 
